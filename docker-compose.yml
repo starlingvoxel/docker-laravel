@@ -1,0 +1,29 @@
+version: '3'
+services:
+  sistema:
+    build:
+      context: ./sistema
+      dockerfile: Dockerfile
+    container_name: sistema
+    networks:
+      - conection
+    volumes:
+      - ./sistema:/var/www/html:z
+    ports:
+      - "8080:80"
+    depends_on:
+      - bd-mysql
+  bd-mysql:
+    build:
+      context: ./bd-mysql
+      dockerfile: Dockerfile
+    container_name: bd-mysql
+    networks:
+      - conection
+    environment:
+      MYSQL_ROOT_PASSWORD: 1170155
+      MYSQL_DATABASE: crud
+      MYSQL_USER: starling
+networks:
+  conection:
+    driver: bridge
